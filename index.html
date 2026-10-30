@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Halloween</title>
+<meta name="theme-color" content="#04090d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&display=swap" rel="stylesheet">
+<style>
+  :root { --night:#04090d; --frame:#123238; --bone:#e9f3ea; --acid:#b4ff39; --ink:#06141a; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background: var(--night); color: var(--bone);
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+    padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  }
+
+  /* Latar kuburan berkabut (halaman 1 dan 2) */
+  .scene {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+    background: linear-gradient(180deg, #04090d 0%, #0a2128 50%, #143d3b 82%, #2b5f50 100%);
+  }
+  .moon { position: absolute; top: 5vmin; right: 6vmin; width: 13vmin; height: 13vmin;
+          filter: drop-shadow(0 0 3vmin rgba(220,255,200,.45)); }
+  .glow { position: absolute; left: 0; right: 0; bottom: 0; height: 50vmin;
+          background: radial-gradient(ellipse at 72% 100%, rgba(140,255,170,.24), transparent 62%); }
+  .hill { position: absolute; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+  .hill-back  { left: -20%; width: 130%; bottom: 0; height: 20vmin; background: #0a1d22; }
+  .hill-front { left: -5%;  width: 125%; bottom: 0; height: 10vmin; background: #050d10; }
+  .house { position: absolute; right: 3vmin; bottom: 12vmin; height: 46vmin; width: auto; }
+  .win { animation: flick 4s ease-in-out infinite; filter: drop-shadow(0 0 1.2vmin rgba(215,255,106,.8)); }
+  .stones { position: absolute; left: 3vmin; bottom: 4vmin; width: 40vmin; height: auto; }
+  .fog { position: absolute; left: 0; width: 200%; height: 26vmin; bottom: 6vmin;
+         background: radial-gradient(ellipse at 20% 55%, rgba(190,230,215,.20), transparent 60%),
+                     radial-gradient(ellipse at 62% 45%, rgba(190,230,215,.15), transparent 55%),
+                     radial-gradient(ellipse at 90% 60%, rgba(190,230,215,.18), transparent 58%);
+         animation: fog 46s linear infinite alternate; }
+  .fog.f2 { bottom: 14vmin; height: 20vmin; opacity: .7; animation-duration: 64s; animation-direction: alternate-reverse; }
+  .ghost { position: absolute; height: auto; animation: float 7s ease-in-out infinite; }
+  .g1 { left: 5%;  top: 18%; width: 11vmin; opacity: .75; }
+  .g2 { right: 6%; top: 34%; width: 8vmin;  opacity: .5;  animation-duration: 9s; animation-delay: -3s; }
+  .g3 { left: 78%; top: 7%;  width: 6vmin;  opacity: .35; animation-duration: 8s; animation-delay: -5s; }
+  .orb { position: absolute; width: 1.1vmin; height: 1.1vmin; border-radius: 50%; background: #d7ff6a;
+         box-shadow: 0 0 2vmin .6vmin rgba(180,255,57,.5); animation: orb 7s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translate(0,0); } 50% { transform: translate(1.5vw,-2.5vh); } }
+  @keyframes fog   { from { transform: translateX(0); } to { transform: translateX(-45%); } }
+  @keyframes flick { 0%,100% { opacity: 1; } 40% { opacity: .75; } 55% { opacity: 1; } 80% { opacity: .6; } }
+  @keyframes orb   { 0%,100% { transform: translate(0,0); opacity: .9; } 50% { transform: translate(2vw,-3vh); opacity: .3; } }
+  @media (orientation: portrait) {
+    .house { height: 62vmin; bottom: 14vmin; } .stones { width: 54vmin; }
+    .hill-back { height: 26vmin; } .hill-front { height: 13vmin; } .moon { width: 17vmin; height: 17vmin; }
+  }
+  @media (prefers-reduced-motion: reduce) { .win, .fog, .ghost, .orb { animation: none; } }
+
+  /* Konten */
+  main { position: relative; z-index: 2; width: 100%; max-width: 420px; display: flex; flex-direction: column;
+         align-items: center; gap: 20px; text-align: center; }
+  h1 { margin: 0; font-weight: 900; font-size: clamp(2rem, 9vw, 2.75rem); line-height: 1.05;
+       letter-spacing: -0.01em; text-shadow: 0 2px 18px rgba(0,0,0,.7); }
+  .frame { width: 100%; background: var(--frame); padding: 10px; border-radius: 18px;
+           box-shadow: 0 0 0 2px rgba(180,255,57,.35), 0 0 36px rgba(180,255,57,.18), 0 12px 40px rgba(0,0,0,.55); }
+  .frame img { display: block; width: 100%; height: auto; border-radius: 10px; }
+  .fallback { display: none; margin: 0; padding: 28px 12px; font-weight: 700; }
+  .cta { display: block; width: 100%; padding: 16px 20px; background: var(--acid); color: var(--ink);
+         font: inherit; font-weight: 900; font-size: 1.1rem; text-decoration: none; border-radius: 14px;
+         box-shadow: 0 8px 28px rgba(0,0,0,.45); }
+  .cta:hover { background: #c8ff6b; }
+  .cta:focus-visible { outline: 3px solid var(--bone); outline-offset: 3px; }
+  .cta:active { transform: translateY(1px); }
+  .debug { width: 100%; margin: 0; padding: 10px 12px; background: rgba(0,0,0,.6); border-radius: 10px;
+           font: 12px/1.45 ui-monospace, Menlo, Consolas, monospace; text-align: left; white-space: pre-wrap; word-break: break-all; }
+
+  /* Halaman 1: ketukan pertama membuka izin suara di browser */
+  .gate { position: fixed; inset: 0; z-index: 10; width: 100%; height: 100%; border: 0; background: transparent;
+          color: var(--bone); font: inherit; font-weight: 900; font-size: clamp(1.6rem, 8vw, 2.4rem);
+          cursor: pointer; padding: 24px; }
+  .gate span { display: inline-block; padding: 18px 26px; background: var(--acid); color: var(--ink);
+               border-radius: 16px; box-shadow: 0 0 0 6px rgba(180,255,57,.22), 0 10px 40px rgba(0,0,0,.5); }
+  .gate:focus-visible { outline: 3px solid var(--bone); outline-offset: -8px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="gh"><path d="M30 4C14 4 6 18 6 34V70L14 62L22 72L30 62L38 72L46 62L54 70V34C54 18 46 4 30 4Z" fill="#e6f7ee"/><ellipse cx="22" cy="32" rx="4" ry="6" fill="#06141a"/><ellipse cx="38" cy="32" rx="4" ry="6" fill="#06141a"/><ellipse cx="30" cy="46" rx="4" ry="5" fill="#06141a"/></g></defs></svg>
+
+<div class="scene" aria-hidden="true">
+  <div class="glow"></div>
+  <svg class="moon" viewBox="0 0 100 100"><defs><mask id="cut"><rect width="100" height="100" fill="#fff"/><circle cx="66" cy="40" r="34"/></mask></defs><circle cx="50" cy="50" r="42" fill="#eaf6d8" mask="url(#cut)"/></svg>
+  <svg class="ghost g1" viewBox="0 0 60 80"><use href="#gh"/></svg>
+  <svg class="ghost g2" viewBox="0 0 60 80"><use href="#gh"/></svg>
+  <svg class="ghost g3" viewBox="0 0 60 80"><use href="#gh"/></svg>
+  <div class="orb" style="left:22%;top:46%"></div>
+  <div class="orb" style="left:64%;top:58%;animation-delay:-2s"></div>
+  <div class="orb" style="left:40%;top:30%;animation-delay:-4s"></div>
+  <div class="orb" style="left:88%;top:44%;animation-delay:-5s"></div>
+  <div class="orb" style="left:10%;top:62%;animation-delay:-1s"></div>
+  <div class="hill hill-back"></div>
+  <svg class="house" viewBox="0 0 270 270">
+    <g fill="#04090c"><path d="M30 270V150L110 92L190 150V270Z"/><path d="M176 270V100L216 30L256 100V270Z"/><path d="M56 120V92h16v18Z"/></g>
+    <g class="win" fill="#d7ff6a"><rect x="52" y="178" width="22" height="32"/><rect x="104" y="178" width="22" height="32"/><rect x="198" y="120" width="20" height="30"/><rect x="198" y="186" width="20" height="30"/><circle cx="110" cy="136" r="9"/></g>
+  </svg>
+  <div class="fog f2"></div>
+  <div class="hill hill-front"></div>
+  <svg class="stones" viewBox="0 0 260 100">
+    <g fill="#0f2a30" stroke="#1d4a50" stroke-width="2">
+      <path d="M20 100V40a20 20 0 0 1 40 0V100Z"/>
+      <path d="M96 100V30H80V16H96V0H110V16H126V30H110V100Z"/>
+      <path d="M160 100V50a22 22 0 0 1 44 0V100Z" transform="rotate(-6 182 100)"/>
+    </g>
+  </svg>
+  <div class="fog"></div>
+</div>
+
+<button class="gate" id="gate" type="button"><span>Ketuk untuk membuka</span></button>
+
+<main id="stage" hidden>
+  <h1>Happy Halloween</h1>
+
+  <div class="frame" id="frame" hidden>
+    <img id="gif" alt="GIF Halloween">
+    <p class="fallback" id="fallback">GIF-nya gagal dimuat. Tombol di bawah tetap berfungsi.</p>
+  </div>
+
+  <a class="cta" href="https://www.instagram.com/jasminor.id/">Buka Instagram @jasminor.id</a>
+
+  <pre class="debug" id="debug" hidden></pre>
+</main>
+
+<audio id="snd" src="sound.mp3" preload="auto"></audio>
+
+<script>
+(function () {
+  // ============================================================
+  // GIF ACAK
+  // Halaman ini mencari sendiri semua file .gif di repo (lewat
+  // GitHub API). Kamu tidak perlu menulis nama file di sini.
+  // Daftar di bawah hanya untuk GIF tambahan dari link luar
+  // (misalnya Giphy). Tiap baris diapit tanda kutip + koma.
+  // ============================================================
+  var GIFS = [
+    'https://media.giphy.com/media/Gj2nHXUa85FXKngX46/giphy.gif',
+  ];
+
+  var GIF_FOLDERS = ['gif', 'gifs', 'img', 'images', 'assets', 'media'];
+  var PROBE_MAX = 20;   // cadangan: coba gif1.gif sampai gif20.gif
+
+  var gate = document.getElementById('gate');
+  var stage = document.getElementById('stage');
+  var frame = document.getElementById('frame');
+  var gif = document.getElementById('gif');
+  var fallback = document.getElementById('fallback');
+  var snd = document.getElementById('snd');
+  var debugEl = document.getElementById('debug');
+
+  var pool = GIFS.slice();
+  var how = 'daftar GIFS saja (pencarian otomatis gagal)';
+  var queue = [];
+  var ready = false, wanted = false, started = false;
+
+  function timeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise(function (_, reject) { setTimeout(function () { reject(new Error('timeout')); }, ms); })
+    ]);
+  }
+  function enc(path) { return path.split('/').map(encodeURIComponent).join('/'); }
+  function isGif(it) { return it && it.type === 'file' && /\.gif$/i.test(it.name); }
+  function unique(list) {
+    var seen = {};
+    return list.filter(function (x) { if (seen[x]) { return false; } seen[x] = 1; return true; });
+  }
+  function shuffle(list) {
+    for (var i = list.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = list[i]; list[i] = list[j]; list[j] = t;
+    }
+    return list;
+  }
+
+  // alamat Pages: https://OWNER.github.io/REPO/
+  function site() {
+    var m = location.hostname.match(/^([^.]+)\.github\.io$/i);
+    var seg = location.pathname.split('/').filter(Boolean)[0];
+    if (m && seg && !/\.html?$/i.test(seg)) { return { owner: m[1], repo: seg }; }
+    return null;
+  }
+
+  function listDir(s, path) {
+    var url = 'https://api.github.com/repos/' + s.owner + '/' + s.repo + '/contents/' + (path ? enc(path) : '');
+    return timeout(fetch(url), 2500).then(function (res) {
+      if (!res.ok) { throw new Error('api ' + res.status); }
+      return res.json();
+    });
+  }
+
+  // Cara 1: tanya GitHub API isi repo (file .gif di root + folder umum)
+  function fromApi() {
+    var s = site();
+    if (!s) { return Promise.reject(new Error('bukan alamat github.io')); }
+    return listDir(s, '').then(function (items) {
+      var found = items.filter(isGif).map(function (it) { return enc(it.path); });
+      var dirs = items.filter(function (it) {
+        return it.type === 'dir' && GIF_FOLDERS.indexOf(it.name.toLowerCase()) !== -1;
+      });
+      return Promise.all(dirs.map(function (d) {
+        return listDir(s, d.path).then(function (sub) {
+          return sub.filter(isGif).map(function (it) { return enc(it.path); });
+        }, function () { return []; });
+      })).then(function (lists) {
+        lists.forEach(function (l) { found = found.concat(l); });
+        return found;
+      });
+    });
+  }
+
+  // Cara 2 (cadangan): cek gif1.gif ... gif20.gif satu per satu
+  function fromProbe() {
+    var jobs = [];
+    for (var i = 1; i <= PROBE_MAX; i++) {
+      (function (name) {
+        jobs.push(timeout(fetch(name, { method: 'HEAD' }), 2500).then(
+          function (res) { return res.ok ? name : null; },
+          function () { return null; }
+        ));
+      })('gif' + i + '.gif');
+    }
+    return Promise.all(jobs).then(function (names) { return names.filter(Boolean); });
+  }
+
+  function discover() {
+    return fromApi().then(function (found) {
+      if (found.length) { how = 'GitHub API'; return found; }
+      return fromProbe().then(function (p) { if (p.length) { how = 'tebak gif1..gif' + PROBE_MAX; } return p; });
+    }, function () {
+      return fromProbe().then(function (p) { if (p.length) { how = 'tebak gif1..gif' + PROBE_MAX; } return p; });
+    });
+  }
+
+  function showNext() {
+    if (!queue.length) {
+      gif.style.display = 'none';
+      frame.hidden = false;
+      fallback.style.display = 'block';
+      return;
+    }
+    gif.src = queue.shift();
+  }
+  gif.addEventListener('load', function () { frame.hidden = false; });
+  gif.addEventListener('error', showNext);
+
+  function start() {
+    if (started) { return; }
+    started = true;
+    queue = shuffle(pool.slice());
+    if (/[?&]debug/.test(location.search)) {
+      debugEl.hidden = false;
+      debugEl.textContent = 'Sumber daftar: ' + how + '\nJumlah GIF: ' + pool.length + '\n' + pool.join('\n') + '\nUrutan acak: ' + queue.join(' > ');
+    }
+    showNext();
+  }
+
+  discover().then(function (found) {
+    pool = unique(found.concat(GIFS));
+  }, function () {}).then(function () {
+    ready = true;
+    if (wanted) { start(); }
+  });
+
+  gate.addEventListener('click', function () {
+    gate.hidden = true;
+    stage.hidden = false;
+    wanted = true;
+    if (ready) { start(); } else { setTimeout(start, 1500); }
+    try {
+      var p = snd.play();
+      if (p && p.catch) { p.catch(function () {}); }
+    } catch (e) {}
+  }, { once: true });
+})();
+</script>
+</body>
+</html>
