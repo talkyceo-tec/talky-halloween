@@ -37,7 +37,7 @@
     .mosque { position: absolute; right: 41vmin; bottom: 12vmin; height: 34vmin; width: auto; }
   .mosque .win { filter: drop-shadow(0 0 1.2vmin rgba(255,211,107,.8)); }
   .win { animation: flick 4s ease-in-out infinite; filter: drop-shadow(0 0 1.2vmin rgba(215,255,106,.8)); }
-  .stones { position: absolute; left: 3vmin; bottom: 4vmin; width: 40vmin; height: auto; }
+  .stones { position: absolute; right: 3vmin; bottom: 4vmin; width: 40vmin; height: auto; }
   .fog { position: absolute; left: 0; width: 200%; height: 26vmin; bottom: 6vmin;
          background: radial-gradient(ellipse at 20% 55%, rgba(190,230,215,.20), transparent 60%),
                      radial-gradient(ellipse at 62% 45%, rgba(190,230,215,.15), transparent 55%),
@@ -57,6 +57,7 @@
   @media (orientation: portrait) {
     .house { height: 62vmin; bottom: 14vmin; } .stones { width: 54vmin; }
     .hill-back { height: 26vmin; } .hill-front { height: 13vmin; } .moon { width: 17vmin; height: 17vmin; }
+    .mosque { height: 44vmin; right: 54vmin; bottom: 14vmin; }
   }
   @media (prefers-reduced-motion: reduce) { .win, .fog, .ghost, .orb { animation: none; } }
 
